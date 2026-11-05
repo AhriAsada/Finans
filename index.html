@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="kk" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30 күндік үнемдеу тәжірибесі</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        },
+                        emerald: {
+                            500: '#10b981',
+                            600: '#059669',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+        }
+        .dark .glass-card {
+            background: rgba(17, 24, 39, 0.85);
+            border: 1px solid rgba(55, 65, 81, 0.5);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-card border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-emerald-500 flex items-center justify-center text-white shadow-md shadow-sky-500/20">
+                    <i class="fa-solid me-0 fa-wallet text-xl"></i>
+                </div>
+                <div>
+                    <span class="text-xs uppercase tracking-wider font-semibold text-sky-600 dark:text-sky-400">Ғылыми-зерттеу жобасы</span>
+                    <h1 class="text-base sm:text-lg font-bold leading-tight">30 Күндік Үнемдеу Тәжірибесі</h1>
+                </div>
+            </div>
+
+            <!-- Action buttons & Theme Toggle -->
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <nav class="hidden md:flex space-x-1 text-sm font-medium text-slate-600 dark:text-slate-300">
+                    <a href="#overview" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition">Шолу</a>
+                    <a href="#analytics" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition">Аналитика</a>
+                    <a href="#journal" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition">Зерттеу күнделігі</a>
+                    <a href="#calculator" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition">Калькулятор</a>
+                    <a href="#theory" class="px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition">Теория</a>
+                </nav>
+
+                <button id="themeToggleBtn" onclick="toggleDarkMode()" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 transition" title="Тақырыпты ауыстыру">
+                    <i class="fa-solid fa-moon dark:hidden"></i>
+                    <i class="fa-solid fa-sun hidden dark:block"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+        <!-- Hero Banner Section -->
+        <section id="overview" class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-slate-900 via-sky-950 to-slate-900 text-white p-6 sm:p-10 shadow-2xl">
+            <div class="absolute -right-10 -bottom-10 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-10 -top-10 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-sky-500/20 border border-sky-400/30 text-sky-300 text-xs font-semibold">
+                        <i class="fa-solid fa-camera"></i>
+                        <span>Негізгі қаржылық мақсат: Фотоаппарат (50 000 ₸)</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+                        Оқушы қанша ақша жинай алады?
+                    </h2>
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        Бұл жоба оқушының күнделікті қалта ақшасын тиімді басқару, шығындарды бақылау және «Конверт әдісі» арқылы мақсатқа жету мүмкіндігін математикалық тұрғыдан дәлелдейді.
+                    </p>
+
+                    <!-- Goal Progress Bar Card -->
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-5 border border-white/10 space-y-3 mt-4">
+                        <div class="flex justify-between items-center text-sm font-semibold">
+                            <span class="text-slate-200">Мақсаттың орындалу барысы:</span>
+                            <span class="text-emerald-400 font-bold text-lg">43% (21 500 ₸)</span>
+                        </div>
+                        <div class="w-full bg-slate-700/60 rounded-full h-4 overflow-hidden p-0.5 border border-slate-600">
+                            <div class="bg-gradient-to-r from-sky-400 to-emerald-400 h-full rounded-full transition-all duration-1000 shadow-lg" style="width: 43%;"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-slate-400 pt-1">
+                            <span>Жиналғаны: <strong>21 500 ₸</strong></span>
+                            <span>Қалғаны: <strong>28 500 ₸</strong></span>
+                            <span>Нысана: <strong>50 000 ₸</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats Grid inside Hero -->
+                <div class="lg:col-span-5 grid grid-cols-2 gap-4">
+                    <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 text-center">
+                        <div class="text-slate-400 text-xs font-medium uppercase tracking-wider mb-1">Бақылау мерзімі</div>
+                        <div class="text-2xl font-bold text-sky-400">27 <span class="text-sm text-slate-300 font-normal">күн</span></div>
+                        <div class="text-xs text-slate-400 mt-1">4–30 қыркүйек 2026</div>
+                    </div>
+
+                    <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 text-center">
+                        <div class="text-slate-400 text-xs font-medium uppercase tracking-wider mb-1">Жалпы түскен ақша</div>
+                        <div class="text-2xl font-bold text-emerald-400">54 000 <span class="text-sm font-normal">₸</span></div>
+                        <div class="text-xs text-slate-400 mt-1">Күн сайын 2 000 ₸</div>
+                    </div>
+
+                    <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 text-center">
+                        <div class="text-slate-400 text-xs font-medium uppercase tracking-wider mb-1">Жалпы жұмсалғаны</div>
+                        <div class="text-2xl font-bold text-rose-400">32 500 <span class="text-sm font-normal">₸</span></div>
+                        <div class="text-xs text-slate-400 mt-1">Шығын үлесі: 60.2%</div>
+                    </div>
+
+                    <div class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-4 text-center">
+                        <div class="text-slate-400 text-xs font-medium uppercase tracking-wider mb-1">Орташа күндік жинақ</div>
+                        <div class="text-2xl font-bold text-amber-400">~796 <span class="text-sm font-normal">₸</span></div>
+                        <div class="text-xs text-slate-400 mt-1">Жинақ үлесі: 39.8%</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Charts & Analytics Section -->
+        <section id="analytics" class="space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line text-sky-500"></i>
+                        Зерттеу Аналитикасы & Графиктер
+                    </h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Күнделікті шығындар мен жинақтың динамикалық талдауы</p>
+                </div>
+                <!-- Interactive Filter Controls for Charts -->
+                <div class="flex items-center space-x-2 bg-slate-100 dark:bg-slate-800 p-1.5 rounded-xl text-xs font-medium">
+                    <button onclick="updateChartRange('all')" id="btnRangeAll" class="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-700 shadow-sm text-sky-600 dark:text-sky-400 transition">Барлық 27 күн</button>
+                    <button onclick="updateChartRange('w1')" id="btnRangeW1" class="px-3 py-1.5 rounded-lg hover:bg-white/50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-300 transition">1-апта</button>
+                    <button onclick="updateChartRange('w2')" id="btnRangeW2" class="px-3 py-1.5 rounded-lg hover:bg-white/50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-300 transition">2-апта</button>
+                    <button onclick="updateChartRange('w3')" id="btnRangeW3" class="px-3 py-1.5 rounded-lg hover:bg-white/50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-300 transition">3-апта</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Bar Chart: Spent vs Saved daily -->
+                <div class="glass-card rounded-2xl p-5 shadow-sm space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm sm:text-base flex items-center gap-2">
+                            <i class="fa-solid fa-chart-column text-sky-500"></i>
+                            Күнделікті: Жұмсалған vs Жиналған (₸)
+                        </h4>
+                        <span class="text-xs bg-slate-100 dark:bg-slate-800 text-slate-500 px-2.5 py-1 rounded-full">Салыстырмалы</span>
+                    </div>
+                    <div class="relative h-72 w-full">
+                        <canvas id="dailyChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Line Chart: Cumulative Savings Progress -->
+                <div class="glass-card rounded-2xl p-5 shadow-sm space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-semibold text-slate-800 dark:text-slate-100 text-sm sm:text-base flex items-center gap-2">
+                            <i class="fa-solid fa-arrow-trend-up text-emerald-500"></i>
+                            Жалпы жинақ өсімі (Траектория)
+                        </h4>
+                        <span class="text-xs bg-emerald-100 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 font-medium px-2.5 py-1 rounded-full">Мақсат: 50 000 ₸</span>
+                    </div>
+                    <div class="relative h-72 w-full">
+                        <canvas id="cumulativeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Research Journal Table Section -->
+        <section id="journal" class="space-y-4">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-book-bookmark text-sky-500"></i>
+                        Зерттеу Күнделігі (27 Күндік Деректер)
+                    </h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Әр күннің нақты шығындары мен жинақ жазбалары</p>
+                </div>
+                
+                <!-- Table Controls -->
+                <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+                    <div class="relative flex-1 sm:w-64">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                        <input type="text" id="searchInput" oninput="filterTable()" placeholder="Жазбаларды іздеу..." class="w-full pl-9 pr-4 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                    </div>
+                    <select id="sortSelect" onchange="filterTable()" class="px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        <option value="day-asc">Күн ретімен (1 ➔ 27)</option>
+                        <option value="day-desc">Күн ретімен (27 ➔ 1)</option>
+                        <option value="saved-desc">Ең көп жиналған</option>
+                        <option value="spent-desc">Ең көп жұмсалған</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Table Card -->
+            <div class="glass-card rounded-2xl shadow-sm overflow-hidden border border-slate-200 dark:border-slate-800">
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-left text-xs sm:text-sm">
+                        <thead class="bg-slate-100/80 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 uppercase tracking-wider font-semibold border-b border-slate-200 dark:border-slate-700">
+                            <tr>
+                                <th class="py-3.5 px-4">Күн №</th>
+                                <th class="py-3.5 px-4">Күні</th>
+                                <th class="py-3.5 px-4">Алынған (₸)</th>
+                                <th class="py-3.5 px-4">Жұмсалған (₸)</th>
+                                <th class="py-3.5 px-4">Жиналған (₸)</th>
+                                <th class="py-3.5 px-4">Жалпы жинақ (₸)</th>
+                                <th class="py-3.5 px-4 min-w-[200px]">Күнделік Жазбасы</th>
+                            </tr>
+                        </thead>
+                        <tbody id="journalTableBody" class="divide-y divide-slate-200 dark:divide-slate-800 font-medium">
+                            <!-- Dynamic Content Rendered Here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="p-4 bg-slate-50 dark:bg-slate-800/40 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center text-xs text-slate-500">
+                    <span>Көрсетіліп тұрған күн саны: <strong id="visibleDaysCount" class="text-slate-800 dark:text-slate-200">27</strong> / 27</span>
+                    <span class="italic"><i class="fa-solid fa-circle-info me-1"></i> Конверт әдісімен тіркелген</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Goal Calculator & Simulator Section -->
+        <section id="calculator" class="glass-card rounded-3xl p-6 sm:p-8 shadow-md border border-sky-100 dark:border-slate-800 space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-calculator text-emerald-500"></i>
+                        Интерактивті Қаржылық Мақсат Симуляторы
+                    </h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Қазылар алқасы мен оқушылар үшін жеке үнемдеу мерзімін есептеу құралы</p>
+                </div>
+                <div class="px-3 py-1 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-semibold rounded-full border border-emerald-500/20">
+                    Модельдеу режимі
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Inputs Form -->
+                <div class="lg:col-span-7 space-y-5">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-2">
+                            Күнделікті берілетін ақша (₸):
+                        </label>
+                        <div class="relative">
+                            <i class="fa-solid fa-tenge-sign absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="number" id="calcAllowance" value="2000" min="100" step="100" oninput="runCalculator()" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 font-bold text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-2">
+                            Мақсаттың бағасы / Зат құны (₸):
+                        </label>
+                        <div class="relative">
+                            <i class="fa-solid fa-tag absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="number" id="calcTarget" value="50000" min="1000" step="1000" oninput="runCalculator()" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 font-bold text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wider">
+                                Күнделікті үнемдеу пайызы (%):
+                            </label>
+                            <span id="calcPercentVal" class="text-emerald-600 dark:text-emerald-400 font-extrabold text-sm">40% (~800 ₸)</span>
+                        </div>
+                        <input type="range" id="calcPercent" min="10" max="90" value="40" oninput="runCalculator()" class="w-full accent-emerald-500 cursor-pointer">
+                        <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+                            <span>10% (Аз үнемдеу)</span>
+                            <span>40% (Зерттеу орташасы)</span>
+                            <span>90% (Қатаң үнем)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simulation Output Box -->
+                <div class="lg:col-span-5">
+                    <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-6 space-y-4 shadow-xl border border-slate-700 relative overflow-hidden">
+                        <div class="absolute -right-8 -top-8 w-32 h-32 bg-emerald-500/10 rounded-full blur-xl"></div>
+                        <h4 class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Симуляция Нәтижесі</h4>
+                        
+                        <div class="space-y-1">
+                            <div class="text-3xl sm:text-4xl font-extrabold text-emerald-400" id="calcResultDays">63 күн</div>
+                            <div class="text-xs text-slate-300">мақсатқа толық жету үшін қажет</div>
+                        </div>
+
+                        <hr class="border-slate-700">
+
+                        <div class="space-y-2 text-xs text-slate-300">
+                            <div class="flex justify-between">
+                                <span>Күнделікті жинақ сомасы:</span>
+                                <strong id="calcDailySave" class="text-white">800 ₸</strong>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Айлық болжамды жинақ (30 күн):</span>
+                                <strong id="calcMonthlySave" class="text-white">24 000 ₸</strong>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>1-айдағы мақсат үлесі:</span>
+                                <strong id="calcMonthlyPercent" class="text-emerald-400">48%</strong>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-white/5 rounded-xl text-[11px] text-slate-400 leading-relaxed border border-white/5">
+                            <i class="fa-solid fa-lightbulb text-amber-400 me-1"></i>
+                            <strong>Тұжырым:</strong> Күнделікті кішігірім тұрақты жинақ ұзақ мерзімде ірі мақсаттарды бағындыруға мүмкіндік береді.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Theoretical Foundations & Findings Section -->
+        <section id="theory" class="space-y-6">
+            <div class="border-b border-slate-200 dark:border-slate-800 pb-3">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-graduation-cap text-sky-500"></i>
+                    Теориялық Негіздер & Зерттеу Нәтижелері
+                </h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Қаржылық сауаттылық принциптері және зерттеу әдістемесі</p>
+            </div>
+
+            <!-- Theory Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="glass-card rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 space-y-3 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-piggy-bank"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-800 dark:text-slate-100 text-base">1. Ақша & Жинақ Ұғымы</h4>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Жинақ — бұл жай ғана қалған ақша емес, белгілі бір айқын мақсатқа (Фотоаппарат - 50 000 ₸) бағытталған қаражат. Нақты сан мен себеп ақша жинау ынтасын арттырады.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 space-y-3 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-800 dark:text-slate-100 text-base">2. Қажеттілік vs Қалау</h4>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                        <strong>Қажеттілік:</strong> Оқу өмірлік бұйымдары, тамақ.<br>
+                        <strong>Қалау:</strong> Өткінші сағыз немесе тәттілер. 9-күні тек 200 ₸ сағызға жұмсалып, 1 800 ₸ жинаққа өтті.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 space-y-3 hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-envelope-open-text"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-800 dark:text-slate-100 text-base">3. «Конверт Әдісі»</h4>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Күнделікті 2 000 ₸ алғаннан кейін, жұмсалмай қалған ақшаны сол бойда жеке конвертке салып, қайта жұмсамау алгоритмі. Тәжірибе негізі осы әдіске сүйенді.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Key Summary Accordion / Model Flow -->
+            <div class="glass-card rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4">
+                <h4 class="font-bold text-slate-800 dark:text-slate-100 text-base flex items-center gap-2">
+                    <i class="fa-solid fa-sitemap text-sky-500"></i>
+                    Зерттеудің Қысқаша Заңдылық Моделі
+                </h4>
+                
+                <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300 text-center py-2">
+                    <span class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">Табиғатқа қызығушылық</span>
+                    <i class="fa-solid fa-chevron-right text-slate-400 hidden sm:inline"></i>
+                    <span class="px-3 py-2 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 border border-sky-500/20">Мақсат: 50 000 ₸ Фотоаппарат</span>
+                    <i class="fa-solid fa-chevron-right text-slate-400 hidden sm:inline"></i>
+                    <span class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800">Күнделікті 2 000 ₸</span>
+                    <i class="fa-solid fa-chevron-right text-slate-400 hidden sm:inline"></i>
+                    <span class="px-3 py-2 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">Шығынды бақылау</span>
+                    <i class="fa-solid fa-chevron-right text-slate-400 hidden sm:inline"></i>
+                    <span class="px-3 py-2 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">27 күнде 21 500 ₸ жинақ (43%)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practical Checklist Recommendations Section -->
+        <section class="glass-card rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 space-y-6">
+            <div>
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-emerald-500"></i>
+                    Оқушыларға Арналған Практикалық Ұсыныстар Интерактивті Тізімі
+                </h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Қаржылық сауаттылық ағымын күнделікті әдетке айналдыру белгілері</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="checklistContainer">
+                <!-- Dynamic Checkboxes loaded via JS -->
+            </div>
+
+            <div class="p-4 rounded-xl bg-sky-500/10 border border-sky-500/20 flex justify-between items-center text-xs sm:text-sm">
+                <span class="text-sky-900 dark:text-sky-200 font-medium">Сіздің орындаған қаржылық әдеттеріңіз:</span>
+                <strong id="checklistScore" class="text-sky-600 dark:text-sky-400 font-bold text-base">0 / 8</strong>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 dark:border-slate-800 mt-12 py-8 bg-white dark:bg-slate-900 text-slate-500 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-2">
+            <p class="font-semibold text-slate-700 dark:text-slate-300">«Зерде» Республикулық Зерттеу Жобасы — Математика & Қолданбалы Математика Секциясы</p>
+            <p>2026-2027 оқу жылы | Оқушының қаржылық сауаттылық зерттеу визуализациясы</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Data & Logic -->
+    <script>
+        // Raw dataset from the research paper (27 Days)
+        const journalData = [
+            { day: 1, date: "4 қыркүйек", received: 2000, spent: 1500, saved: 500, total: 500, note: "Алғашқы күн. Шығындар бақылауға алынды." },
+            { day: 2, date: "5 қыркүйек", received: 2000, spent: 1000, saved: 1000, total: 1500, note: "Тамаққа үнемді шешім қабылданды." },
+            { day: 3, date: "6 қыркүйек", received: 2000, spent: 1000, saved: 1000, total: 2500, note: "Күнделікті 1000 тг үнемделді." },
+            { day: 4, date: "7 қыркүйек", received: 2000, spent: 1200, saved: 800, total: 3300, note: "Оқу құралдары алынды." },
+            { day: 5, date: "8 қыркүйек", received: 2000, spent: 1500, saved: 500, total: 3800, note: "Көлік және түскі ас шығындары." },
+            { day: 6, date: "9 қыркүйек", received: 2000, spent: 800, saved: 1200, total: 5000, note: "5000 теңгелік алғашқы белес бағындырылды!" },
+            { day: 7, date: "10 қыркүйек", received: 2000, spent: 500, saved: 1500, total: 6500, note: "Үнемдеу көрсеткіші өсті." },
+            { day: 8, date: "11 қыркүйек", received: 2000, spent: 500, saved: 1500, total: 7500, note: "Тұрақты 1500 тг жинақ." },
+            { day: 9, date: "12 қыркүйек", received: 2000, spent: 200, saved: 1800, total: 9200, note: "Бар болғаны 200 тг сағызға жұмсалды, қалғаны жиналды." },
+            { day: 10, date: "13 қыркүйек", received: 2000, spent: 1200, saved: 800, total: 10000, note: "10 000 теңге межесі өтілді." },
+            { day: 11, date: "14 қыркүйек", received: 2000, spent: 1800, saved: 200, total: 10200, note: "Қосымша оқу материалдары сатып алынды." },
+            { day: 12, date: "15 қыркүйек", received: 2000, spent: 1200, saved: 800, total: 11000, note: "Шығындар бақылауда." },
+            { day: 13, date: "16 қыркүйек", received: 2000, spent: 1000, saved: 1000, total: 12000, note: "Конверт әдісі өз нәтижесін беруде." },
+            { day: 14, date: "17 қыркүйек", received: 2000, spent: 1700, saved: 300, total: 12300, note: "Шығын сәл көбейді." },
+            { day: 15, date: "18 қыркүйек", received: 2000, spent: 1500, saved: 500, total: 12800, note: "Тұрақты нәтиже." },
+            { day: 16, date: "19 қыркүйек", received: 2000, spent: 1800, saved: 200, total: 13000, note: "Демалыс алдындағы шығындар." },
+            { day: 17, date: "20 қыркүйек", received: 2000, spent: 300, saved: 1700, total: 14700, note: "Үйде тамақтану арқылы 1700 тг үнемделді." },
+            { day: 18, date: "21 қыркүйек", received: 2000, spent: 1700, saved: 300, total: 15000, note: "15 000 теңге жиналды." },
+            { day: 19, date: "22 қыркүйек", received: 2000, spent: 1400, saved: 600, total: 15600, note: "Жинақ ақша конвертте сақтаулы." },
+            { day: 20, date: "23 қыркүйек", received: 2000, spent: 1850, saved: 150, total: 15750, note: "Шұғыл қажеттілікке 1850 тг кетті." },
+            { day: 21, date: "24 қыркүйек", received: 2000, spent: 1750, saved: 250, total: 16000, note: "Айдың соңына қарай реттеу." },
+            { day: 22, date: "25 қыркүйек", received: 2000, spent: 500, saved: 1500, total: 17500, note: "Қайтадан үнемдеу қарқыны артты." },
+            { day: 23, date: "26 қыркүйек", received: 2000, spent: 1000, saved: 1000, total: 18500, note: "Жүйелі үнем." },
+            { day: 24, date: "27 қыркүйек", received: 2000, spent: 1500, saved: 500, total: 19000, note: "19 000 теңгелік белес." },
+            { day: 25, date: "28 қыркүйек", received: 2000, spent: 1000, saved: 1000, total: 20000, note: "20 000 теңге межесі өтілді!" },
+            { day: 26, date: "29 қыркүйек", received: 2000, spent: 1000, saved: 1000, total: 21000, note: "Жинақ қарқыны сақталды." },
+            { day: 27, date: "30 қыркүйек", received: 2000, spent: 1500, saved: 500, total: 21500, note: "Тәжірибе қорытындысы: Жалпы 21 500 ₸ жиналды (43%)." }
+        ];
+
+        // Recommendations list
+        const recommendations = [
+            "Нақты қаржылық мақсат қою (Фотоаппарат т.б.)",
+            "Мақсаттың нақты бағасын алдын ала анықтау",
+            "Күнделікті шығындарды жазып, бақылау",
+            "Сатып алу алдында: «Бұл маған қазір қажет пе?» деп сұрау",
+            "Жинақталған ақшаны бөлек конвертте сақтау",
+            "Күнделік жүргізіп, нәтижені есептеу",
+            "Апталық қорытынды жасап, шығынды талдау",
+            "Жинақтауды күнделікті тұрақты әдетке айналдыру"
+        ];
+
+        let dailyChartInstance = null;
+        let cumulativeChartInstance = null;
+
+        // Dark mode toggle logic
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            renderCharts(journalData);
+        }
+
+        // Initialize Theme from system or local storage
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Render Journal Table
+        function renderJournalTable(data) {
+            const tbody = document.getElementById('journalTableBody');
+            tbody.innerHTML = '';
+
+            data.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 dark:hover:bg-slate-800/60 transition-colors";
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-bold text-sky-600 dark:text-sky-400">#${item.day}</td>
+                    <td class="py-3 px-4 font-medium">${item.date}</td>
+                    <td class="py-3 px-4 text-slate-600 dark:text-slate-300">${item.received.toLocaleString()} ₸</td>
+                    <td class="py-3 px-4 text-rose-500 font-semibold">${item.spent.toLocaleString()} ₸</td>
+                    <td class="py-3 px-4 text-emerald-600 dark:text-emerald-400 font-bold">+${item.saved.toLocaleString()} ₸</td>
+                    <td class="py-3 px-4 font-bold text-slate-800 dark:text-slate-100">${item.total.toLocaleString()} ₸</td>
+                    <td class="py-3 px-4 text-xs text-slate-500 dark:text-slate-400">${item.note}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('visibleDaysCount').innerText = data.length;
+        }
+
+        // Search & Sort Filter for Table
+        function filterTable() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const sortVal = document.getElementById('sortSelect').value;
+
+            let filtered = journalData.filter(item => 
+                item.date.toLowerCase().includes(query) ||
+                item.note.toLowerCase().includes(query) ||
+                item.day.toString().includes(query)
+            );
+
+            if (sortVal === 'day-asc') {
+                filtered.sort((a, b) => a.day - b.day);
+            } else if (sortVal === 'day-desc') {
+                filtered.sort((a, b) => b.day - a.day);
+            } else if (sortVal === 'saved-desc') {
+                filtered.sort((a, b) => b.saved - a.saved);
+            } else if (sortVal === 'spent-desc') {
+                filtered.sort((a, b) => b.spent - a.spent);
+            }
+
+            renderJournalTable(filtered);
+        }
+
+        // Render Charts with Chart.js
+        function renderCharts(data) {
+            const isDark = document.documentElement.classList.contains('dark');
+            const textColor = isDark ? '#94a3b8' : '#64748b';
+            const gridColor = isDark ? 'rgba(51, 65, 85, 0.4)' : 'rgba(226, 232, 240, 0.8)';
+
+            const labels = data.map(d => `${d.day}-күн`);
+            const spentArray = data.map(d => d.spent);
+            const savedArray = data.map(d => d.saved);
+            const totalArray = data.map(d => d.total);
+
+            // Destroy existing charts to rebuild smoothly
+            if (dailyChartInstance) dailyChartInstance.destroy();
+            if (cumulativeChartInstance) cumulativeChartInstance.destroy();
+
+            // 1. Daily Spent vs Saved Bar Chart
+            const ctx1 = document.getElementById('dailyChart').getContext('2d');
+            dailyChartInstance = new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Жұмсалған (₸)',
+                            data: spentArray,
+                            backgroundColor: 'rgba(244, 63, 94, 0.75)',
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Жиналған (₸)',
+                            data: savedArray,
+                            backgroundColor: 'rgba(16, 185, 129, 0.85)',
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: textColor, font: { family: 'Inter', size: 11 } } },
+                        tooltip: { mode: 'index', intersect: false }
+                    },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: textColor, font: { size: 10 } } },
+                        y: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 } } }
+                    }
+                }
+            });
+
+            // 2. Cumulative Line Chart
+            const ctx2 = document.getElementById('cumulativeChart').getContext('2d');
+            cumulativeChartInstance = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Жалпы жинақ (₸)',
+                            data: totalArray,
+                            borderColor: '#0284c7',
+                            backgroundColor: 'rgba(2, 132, 199, 0.15)',
+                            fill: true,
+                            tension: 0.35,
+                            borderWidth: 3,
+                            pointRadius: 3,
+                            pointBackgroundColor: '#0284c7'
+                        },
+                        {
+                            label: 'Мақсат шегі (50 000 ₸)',
+                            data: new Array(data.length).fill(50000),
+                            borderColor: 'rgba(234, 179, 8, 0.8)',
+                            borderDash: [5, 5],
+                            pointRadius: 0,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: textColor, font: { family: 'Inter', size: 11 } } }
+                    },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: textColor, font: { size: 10 } } },
+                        y: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 } }, max: 55000 }
+                    }
+                }
+            });
+        }
+
+        // Update Chart Display Range
+        function updateChartRange(range) {
+            let filteredData = journalData;
+            
+            // Reset active button state
+            ['btnRangeAll', 'btnRangeW1', 'btnRangeW2', 'btnRangeW3'].forEach(id => {
+                const btn = document.getElementById(id);
+                btn.className = "px-3 py-1.5 rounded-lg hover:bg-white/50 dark:hover:bg-slate-700/50 text-slate-600 dark:text-slate-300 transition";
+            });
+
+            if (range === 'w1') {
+                filteredData = journalData.slice(0, 9);
+                document.getElementById('btnRangeW1').className = "px-3 py-1.5 rounded-lg bg-white dark:bg-slate-700 shadow-sm text-sky-600 dark:text-sky-400 font-bold";
+            } else if (range === 'w2') {
+                filteredData = journalData.slice(9, 18);
+                document.getElementById('btnRangeW2').className = "px-3 py-1.5 rounded-lg bg-white dark:bg-slate-700 shadow-sm text-sky-600 dark:text-sky-400 font-bold";
+            } else if (range === 'w3') {
+                filteredData = journalData.slice(18, 27);
+                document.getElementById('btnRangeW3').className = "px-3 py-1.5 rounded-lg bg-white dark:bg-slate-700 shadow-sm text-sky-600 dark:text-sky-400 font-bold";
+            } else {
+                document.getElementById('btnRangeAll').className = "px-3 py-1.5 rounded-lg bg-white dark:bg-slate-700 shadow-sm text-sky-600 dark:text-sky-400 font-bold";
+            }
+
+            renderCharts(filteredData);
+        }
+
+        // Financial Goal Calculator Logic
+        function runCalculator() {
+            const allowance = parseFloat(document.getElementById('calcAllowance').value) || 0;
+            const target = parseFloat(document.getElementById('calcTarget').value) || 0;
+            const percent = parseFloat(document.getElementById('calcPercent').value) || 0;
+
+            const dailySave = allowance * (percent / 100);
+            const daysNeeded = dailySave > 0 ? Math.ceil(target / dailySave) : 0;
+            const monthlySave = dailySave * 30;
+            const monthlyPercent = target > 0 ? Math.min(Math.round((monthlySave / target) * 100), 100) : 0;
+
+            document.getElementById('calcPercentVal').innerText = `${percent}% (~${Math.round(dailySave).toLocaleString()} ₸)`;
+            document.getElementById('calcResultDays').innerText = `${daysNeeded} күн`;
+            document.getElementById('calcDailySave').innerText = `${Math.round(dailySave).toLocaleString()} ₸`;
+            document.getElementById('calcMonthlySave').innerText = `${Math.round(monthlySave).toLocaleString()} ₸`;
+            document.getElementById('calcMonthlyPercent').innerText = `${monthlyPercent}%`;
+        }
+
+        // Render Practical Recommendations Checklist
+        function renderChecklist() {
+            const container = document.getElementById('checklistContainer');
+            container.innerHTML = '';
+
+            recommendations.forEach((rec, idx) => {
+                const item = document.createElement('label');
+                item.className = "flex items-start space-x-3 p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 cursor-pointer hover:bg-sky-50/50 dark:hover:bg-slate-800 transition";
+                item.innerHTML = `
+                    <input type="checkbox" onchange="updateChecklistScore()" class="mt-0.5 rounded text-emerald-500 focus:ring-emerald-400 w-4 h-4 cursor-pointer">
+                    <span class="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200">${idx + 1}. ${rec}</span>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function updateChecklistScore() {
+            const checkedCount = document.querySelectorAll('#checklistContainer input[type="checkbox"]:checked').length;
+            document.getElementById('checklistScore').innerText = `${checkedCount} / ${recommendations.length}`;
+        }
+
+        // Window Init
+        window.onload = function() {
+            renderJournalTable(journalData);
+            renderCharts(journalData);
+            runCalculator();
+            renderChecklist();
+        };
+    </script>
+</body>
+</html>
